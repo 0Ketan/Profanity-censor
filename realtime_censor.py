@@ -119,7 +119,7 @@ class RealTimeCensor:
         # WARM-UP: Discard first few audio reads to ensure PyAudio is ready
         # This prevents initial silent/quiet frames at the beginning
         print("   Warming up audio stream...")
-        warm_up_frames = 5
+        warm_up_frames = 10  # Increased from 5 to reduce initial silence
         for _ in range(warm_up_frames):
             try:
                 stream.read(self.chunk_size)
@@ -208,8 +208,11 @@ class RealTimeCensor:
         print("🎥 Recording video... Press 'q' to stop early")
 
         start_time = time.time()
+        frame_duration = 1.0 / fps  # Frame duration in seconds for 30fps
 
         while recording_active:
+            start_frame_time = time.time()
+
             ret, frame = cap.read()
             if ret:
                 out.write(frame)
@@ -220,6 +223,11 @@ class RealTimeCensor:
                 # Check for stop key
                 if cv2.waitKey(1) & 0xFF == ord('q'):
                     break
+
+            # Control frame rate - ensure we don't record faster than target FPS
+            elapsed_frame = time.time() - start_frame_time
+            if elapsed_frame < frame_duration:
+                time.sleep(frame_duration - elapsed_frame)
 
             # Check duration
             elapsed = time.time() - start_time
@@ -320,6 +328,8 @@ class RealTimeCensor:
                 print(f"  Processing {len(sorted_segments)} segments...")
 
                 # Build beep-censored audio
+                MIN_BEEP_DURATION_MS = 500  # Minimum beep duration (ms) - ensure beep is audible
+
                 for i, segment in enumerate(sorted_segments):
                     start_ms = int(float(segment['start']) * 1000)
                     end_ms = int(float(segment['end']) * 1000)
@@ -327,10 +337,13 @@ class RealTimeCensor:
                     # Preserve audio before this profanity
                     censored_audio += audio[last_end_ms:start_ms]
 
-                    # Add beep (adjust duration to match profanity length)
+                    # Add beep (adjust duration to match profanity length, with minimum)
                     profanity_duration = end_ms - start_ms
+                    if profanity_duration < MIN_BEEP_DURATION_MS:
+                        profanity_duration = MIN_BEEP_DURATION_MS  # Make sure beep is audible
+
                     censored_audio += beep[:profanity_duration]
-                    print(f"    [{i+1}/{len(sorted_segments)}] {segment['word']} at {segment['start']:.2f}s")
+                    print(f"    [{i+1}/{len(sorted_segments)}] {segment['word']} at {segment['start']:.2f}s (beep: {profanity_duration}ms)")
 
                     last_end_ms = end_ms
 

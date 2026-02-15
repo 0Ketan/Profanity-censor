@@ -1,0 +1,102 @@
+# Profanity List for Profanity Censor
+# Lines starting with # are comments
+# Add one word per line (case-insensitive)
+
+# Strong profanity - will always be censored
+fuck
+fucking
+fucker
+fucked
+shit
+shitty
+bullshit
+bitch
+bitches
+bitching
+ass
+asshole
+assholes
+damn
+goddamn
+goddam
+dammit
+damnit
+hell
+piss
+pissed
+pissing
+dick
+dicks
+cock
+cocks
+pussy
+pussies
+bastard
+bastards
+motherfucker
+motherfuckers
+
+# Slurs and offensive terms (high priority)
+nigger
+niggers
+nigga
+niggas
+faggot
+faggots
+retard
+retards
+retarded
+tranny
+transvestite
+
+# Moderate profanity
+cunt
+cunts
+wanker
+wankers
+bollocks
+tosser
+tossers
+prick
+pricks
+slut
+sluts
+whore
+whores
+ho
+hos
+skank
+skanks
+douche
+douchebag
+douchebags
+douchey
+
+# Mild profanity (you can comment these out if not needed)
+frick
+freaking
+freakin
+darn
+heck
+crap
+crappy
+sucks
+sucked
+screwed
+screw
+
+# Common text/chat/leet speak variants
+fk
+sh1t
+b1tch
+biatch
+azz
+a55
+dam
+pusy
+fu ck
+f uck
+fuc k
+
+# Additional words (add your own below)
+

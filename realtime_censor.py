@@ -358,6 +358,7 @@ class RealTimeCensor:
         print(f"   Audio: {censored_audio_path}")
         print(f"   Output: {self.final_video}")
 
+        # Use a simpler, more compatible ffmpeg command
         cmd = [
             'ffmpeg', '-y',
             '-i', str(self.censored_video),      # Input video (with visual indicators)
@@ -365,12 +366,9 @@ class RealTimeCensor:
             '-c:v', 'copy',                       # Copy video codec (no re-encoding)
             '-c:a', 'aac',                        # Use AAC audio codec
             '-b:a', '192k',                       # Audio bitrate
-            '-async', '1',                        # Sync audio to video
-            '-vsync', '1',                        # Ensure video sync
+            '-map', '0:v:0',                      # Map video from first input
+            '-map', '1:a:0',                      # Map audio from second input
             '-shortest',                          # Use shortest stream duration
-            '-fflags', '+genpts',                 # Generate missing PTS
-            '-af', 'aresample=async=1',           # Resample audio for sync
-            '-strict', 'experimental',            # Allow experimental codecs if needed
             str(self.final_video)                 # Output video with beep-censored audio
         ]
 
@@ -383,6 +381,10 @@ class RealTimeCensor:
                 check=True
             )
             print(f"  ✓ ffmpeg completed successfully")
+
+            if result.stdout:
+                print(f"  Debug: {result.stdout[:200]}...")
+
             print(f"\n✅ Video with beep-censored audio saved:")
             print(f"   {self.final_video}")
 
@@ -390,6 +392,16 @@ class RealTimeCensor:
             if self.final_video.exists() and self.final_video.stat().st_size > 0:
                 file_size_mb = self.final_video.stat().st_size / (1024 * 1024)
                 print(f"   File size: {file_size_mb:.2f} MB")
+
+                # Use ffprobe to check audio stream
+                ffprobe_cmd = ['ffprobe', '-v', 'error', '-show_streams', '-select_streams', 'a:0', str(self.final_video)]
+                try:
+                    probe_result = subprocess.run(ffprobe_cmd, capture_output=True, text=True, check=True)
+                    if 'codec_name' in probe_result.stdout:
+                        print(f"   ✓ Audio stream detected in output")
+                except:
+                    print(f"   ⚠️ Could not verify audio stream")
+
             else:
                 print(f"❌ WARNING: Output file not created or empty!")
 
@@ -400,15 +412,20 @@ class RealTimeCensor:
 
         except subprocess.CalledProcessError as e:
             print(f"\n❌ ERROR: ffmpeg failed to combine audio and video!")
+            print(f"\n  Command run:")
+            print(f"  {' '.join(cmd)}")
             print(f"\n  Error details:")
             print(f"  - Return code: {e.returncode}")
             if e.stderr:
                 print(f"  - Error output:\n{e.stderr}")
             print(f"\n  Troubleshooting steps:")
             print(f"  1. Check ffmpeg is installed: ffmpeg -version")
-            print(f"  2. Check input files exist and are valid")
-            print(f"  3. Try running ffmpeg manually with the same command")
-            print(f"  4. Check video and audio codecs are compatible")
+            print(f"  2. Check input files exist and are valid:")
+            print(f"     - Video file: {self.censored_video} (size: {self.censored_video.stat().st_size if self.censored_video.exists() else 'missing'})")
+            print(f"     - Audio file: {censored_audio_path} (size: {censored_audio_path.stat().st_size if censored_audio_path.exists() else 'missing'})")
+            print(f"  3. Test video file: ffprobe '{self.censored_video}'")
+            print(f"  4. Test audio file: ffprobe '{censored_audio_path}'")
+            print(f"  5. Try running command manually to see detailed error")
 
         except Exception as e:
             print(f"  ⚠️  Unexpected error: {e}")

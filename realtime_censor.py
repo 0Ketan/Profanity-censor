@@ -38,7 +38,7 @@ class RealTimeCensor:
         self.device = device
         self.censor = ProfanityCensor(model_size=model_size, device=device)
         self.audio_chunk_duration = 30.0  # seconds per chunk
-        self.sample_rate = 16000
+        self.sample_rate = 44100  # Use 44.1kHz for better audio quality (was 16000)
         self.channels = 1
         self.chunk_size = 1024
         self.output_dir = Path("recordings")
@@ -358,17 +358,20 @@ class RealTimeCensor:
         print(f"   Audio: {censored_audio_path}")
         print(f"   Output: {self.final_video}")
 
-        # Use a simpler, more compatible ffmpeg command
+        # Use high-quality ffmpeg settings for clear audio
         cmd = [
             'ffmpeg', '-y',
             '-i', str(self.censored_video),      # Input video (with visual indicators)
             '-i', str(censored_audio_path),      # Input audio (beep-censored)
             '-c:v', 'copy',                       # Copy video codec (no re-encoding)
             '-c:a', 'aac',                        # Use AAC audio codec
-            '-b:a', '192k',                       # Audio bitrate
+            '-b:a', '256k',                       # Higher audio bitrate for clarity
+            '-ar', '44100',                       # Set audio sample rate to 44.1kHz
+            '-ac', '1',                           # Mono audio
             '-map', '0:v:0',                      # Map video from first input
             '-map', '1:a:0',                      # Map audio from second input
             '-shortest',                          # Use shortest stream duration
+            '-af', 'aresample=resampler=soxr',    # High-quality resampler
             str(self.final_video)                 # Output video with beep-censored audio
         ]
 

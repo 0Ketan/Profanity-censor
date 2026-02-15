@@ -12,18 +12,6 @@
 
 </div>
 
-<p align="center">
-  <img src="assets/demo-preview.png" alt="Demo" width="600"/>
-</p>
-
----
-
-## 📺 Demo
-
-https://github.com/user-attachments/assets/demo-video.mp4
-
-*Watch the AI automatically detect and censor profanity in real-time*
-
 ---
 
 ## 🚀 Features

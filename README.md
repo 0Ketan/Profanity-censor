@@ -76,7 +76,7 @@ https://github.com/user-attachments/assets/demo-video.mp4
 
 ```bash
 # 1. Clone the repository
-git clone https://github.com/yourusername/profanity-censor.git
+git clone https://github.com/KetanSon/profanity-censor.git
 cd profanity-censor
 
 # 2. Install Python dependencies
@@ -343,7 +343,7 @@ This project is licensed under the GPL-3.0 License - see the [LICENSE](LICENSE) 
 
 - 📱 **LinkedIn**: [Your Name](https://linkedin.com/in/yourname)
 - 🐦 **Twitter**: [@yourhandle](https://twitter.com/yourhandle)
-- 📧 **Email**: your.email@example.com
+- 📧 **Email**: bketan178@gmail.com
 
 ---
 

@@ -5,7 +5,7 @@ AI-Powered Profanity Censor for Audio/Video
 Version: 1.0.0
 License: GPL-3.0
 Author: KetanSon
-GitHub: https://github.com/yourusername/profanity-censor
+GitHub: https://github.com/KetanSon/profanity-censor
 
 A powerful tool for automatically detecting and censoring profanity
 in audio and video files using OpenAI Whisper AI.
@@ -24,13 +24,13 @@ Usage:
     python3 profanity_censor.py podcast.mp4 --list-only
 
 For more information, visit:
-https://github.com/yourusername/profanity-censor
+https://github.com/KetanSon/profanity-censor
 """
 
 __version__ = "1.0.0"
 __author__ = "KetanSon"
 __license__ = "GPL-3.0"
-__github__ = "https://github.com/yourusername/profanity-censor"
+__github__ = "https://github.com/KetanSon/profanity-censor"
 
 import argparse
 import os
@@ -379,14 +379,30 @@ class ProfanityCensor:
             # Extract audio
             print("Extracting audio...")
             audio_path = temp_path / "temp_audio.mp3"
-            subprocess.run([
-                "ffmpeg", "-y",
-                "-i", video_file,
-                "-vn",
-                "-acodec", "libmp3lame",
-                "-ar", "44100",
-                str(audio_path)
-            ], capture_output=True, check=True)
+            try:
+                result = subprocess.run([
+                    "ffmpeg", "-y",
+                    "-i", video_file,
+                    "-vn",
+                    "-acodec", "libmp3lame",
+                    "-ar", "44100",
+                    str(audio_path)
+                ], capture_output=True, check=True)
+
+                if not audio_path.exists():
+                    raise RuntimeError("Audio extraction failed: no output file created")
+
+            except subprocess.CalledProcessError as e:
+                # Check if video has no audio stream
+                stderr = e.stderr.decode('utf-8', errors='ignore') if e.stderr else ""
+                if "does not contain any stream" in stderr or "Output file does not contain any stream" in stderr:
+                    print("❌ ERROR: Video file has no audio stream to process")
+                    print("   This tool requires video files with audio content")
+                    return None
+                else:
+                    raise RuntimeError(f"FFmpeg error during audio extraction: {stderr}")
+            except Exception as e:
+                raise RuntimeError(f"Failed to extract audio from video: {e}")
 
             # Transcribe and detect profanity
             profanity_segments = self.transcribe_audio(str(audio_path))

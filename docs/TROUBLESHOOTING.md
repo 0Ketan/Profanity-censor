@@ -301,7 +301,7 @@ done
 
 If you're still having issues:
 
-1. **Create an Issue**: https://github.com/yourusername/profanity-censor/issues
+1. **Create an Issue**: https://github.com/KetanSon/profanity-censor/issues
 2. **Include:**
    - Error message
    - Python version: `python3 --version`

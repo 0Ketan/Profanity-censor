@@ -39,7 +39,7 @@ ffmpeg -version
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/profanity-censor.git
+git clone https://github.com/KetanSon/profanity-censor.git
 cd profanity-censor
 
 # Install Python packages
@@ -76,7 +76,7 @@ sudo port install ffmpeg
 ### Step 2: Install Python Dependencies
 
 ```bash
-git clone https://github.com/yourusername/profanity-censor.git
+git clone https://github.com/KetanSon/profanity-censor.git
 cd profanity-censor
 pip3 install -r requirements.txt
 ```
@@ -101,7 +101,7 @@ ffmpeg -version
 ### Step 2: Install Python Dependencies
 
 ```cmd
-git clone https://github.com/yourusername/profanity-censor.git
+git clone https://github.com/KetanSon/profanity-censor.git
 cd profanity-censor
 pip install -r requirements.txt
 ```
@@ -199,7 +199,7 @@ export HF_HOME="/path/to/cache"
 
 ## 🆘 Need Help?
 
-- Create an [Issue](https://github.com/yourusername/profanity-censor/issues)
+- Create an [Issue](https://github.com/KetanSon/profanity-censor/issues)
 - Check [FAQ.md](FAQ.md)
 - Join Discussions
 

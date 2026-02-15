@@ -85,7 +85,7 @@ Go to the original repository and create a Pull Request. Please include:
 - [ ] Parallel batch processing
 
 ### Bugs
-Check the [Issues](https://github.com/yourusername/profanity-censor/issues) tab for bug reports.
+Check the [Issues](https://github.com/KetanSon/profanity-censor/issues) tab for bug reports.
 
 ### Documentation
 - Language translations
@@ -118,7 +118,7 @@ python3 profanity_censor.py examples/sample.mp4
 
 ## 📝 Feature Suggestions
 
-Have an idea? Create an [Issue](https://github.com/yourusername/profanity-censor/issues) with:
+Have an idea? Create an [Issue](https://github.com/KetanSon/profanity-censor/issues) with:
 - Clear feature description
 - Use case examples
 - Benefit to users
@@ -145,8 +145,8 @@ We pledge to make participation a harassment-free experience for everyone, regar
 
 ## 📧 Contact
 
-- Issues: [GitHub Issues](https://github.com/yourusername/profanity-censor/issues)
-- Discussions: [GitHub Discussions](https://github.com/yourusername/profanity-censor/discussions)
+- Issues: [GitHub Issues](https://github.com/KetanSon/profanity-censor/issues)
+- Discussions: [GitHub Discussions](https://github.com/KetanSon/profanity-censor/discussions)
 - Twitter: [@yourhandle](https://twitter.com/yourhandle)
 - LinkedIn: [Your Name](https://linkedin.com/in/yourname)
 

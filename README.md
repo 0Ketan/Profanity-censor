@@ -329,8 +329,7 @@ This project is licensed under the GPL-3.0 License - see the [LICENSE](LICENSE) 
 
 ## 📧 Contact
 
-- 📱 **LinkedIn**: [Your Name](https://linkedin.com/in/yourname)
-- 🐦 **Twitter**: [@yourhandle](https://twitter.com/yourhandle)
+- 📱 **LinkedIn**: [Ketan](https://linkedin.com/in/b-ketan-raju-830b93391
 - 📧 **Email**: bketan178@gmail.com
 
 ---

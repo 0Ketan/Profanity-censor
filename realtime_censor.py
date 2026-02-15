@@ -116,6 +116,10 @@ class RealTimeCensor:
         chunk_frames = []
         chunk_start_time = 0
 
+        # Use shared recording start time for synchronization
+        self.recording_start_time = time.time()
+        self.audio_start_offset = 0  # Audio starts immediately
+
         # WARM-UP: Discard first few audio reads to ensure PyAudio is ready
         # This prevents initial silent/quiet frames at the beginning
         print("   Warming up audio stream...")
@@ -207,7 +211,11 @@ class RealTimeCensor:
 
         print("🎥 Recording video... Press 'q' to stop early")
 
-        start_time = time.time()
+        # Wait for audio to initialize before starting video
+        # This ensures both audio and video start close together
+        time.sleep(0.05)  # Small delay to sync audio and video start
+
+        fps = 30
         frame_duration = 1.0 / fps  # Frame duration in seconds for 30fps
 
         while recording_active:
@@ -229,8 +237,8 @@ class RealTimeCensor:
             if elapsed_frame < frame_duration:
                 time.sleep(frame_duration - elapsed_frame)
 
-            # Check duration
-            elapsed = time.time() - start_time
+            # Check duration (using shared recording start time for sync)
+            elapsed = time.time() - self.recording_start_time
             if duration_seconds and elapsed >= duration_seconds:
                 break
 

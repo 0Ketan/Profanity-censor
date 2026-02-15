@@ -1,0 +1,96 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "profanity-censor"
+version = "1.0.0"
+description = "AI-powered profanity detection and censorship for audio/video files"
+readme = "README.md"
+license = {text = "GPL-3.0"}
+authors = [
+    {name = "KetanSon", email = "bketan178@gmail.com"}
+]
+maintainers = [
+    {name = "KetanSon", email = "bketan178@gmail.com"}
+]
+keywords = ["profanity", "censorship", "whisper", "ai", "audio", "video", "speech", "transcription"]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Developers",
+    "Intended Audience :: End Users/Desktop",
+    "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Multimedia :: Sound/Audio :: Speech",
+    "Topic :: Multimedia :: Video",
+    "Topic :: Communications",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
+requires-python = ">=3.8"
+dependencies = [
+    "faster-whisper>=0.10.0",
+    "pydub>=0.25.1",
+    "numpy>=1.21.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=6.0",
+    "black>=21.0",
+    "flake8>=3.9",
+    "isort>=5.0",
+]
+docs = [
+    "sphinx>=4.0",
+    "sphinx-rtd-theme>=1.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/KetanSon/profanity-censor"
+Documentation = "https://github.com/KetanSon/profanity-censor#readme"
+Repository = "https://github.com/KetanSon/profanity-censor.git"
+"Bug Tracker" = "https://github.com/KetanSon/profanity-censor/issues"
+"Changelog" = "https://github.com/KetanSon/profanity-censor/blob/main/CHANGELOG.md"
+
+[project.scripts]
+profanity-censor = "profanity_censor:main"
+
+[tool.setuptools]
+packages = ["profanity_censor"]
+
+[tool.black]
+line-length = 88
+target-version = ['py38', 'py39', 'py310', 'py311', 'py312']
+include = '\.pyi?$'
+extend-exclude = '''
+/(
+  # directories
+  \.eggs
+  | \.git
+  | \.hg
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | _build
+  | buck-out
+  | build
+  | dist
+)/
+'''
+
+[tool.isort]
+profile = "black"
+multi_line_output = 3
+line_length = 88
+known_first_party = ["profanity_censor"]
+
+[tool.flake8]
+max-line-length = 88
+extend-ignore = ["E203", "W503"]
+exclude = [".git", "__pycache__", "build", "dist"]

@@ -1,0 +1,19 @@
+# Requirements for profanity_censor.py
+# Install with: pip install -r requirements-censor.txt
+
+# Core transcription
+faster-whisper>=0.10.0  # GPU-accelerated, recommended
+# OR (uncomment if faster-whisper doesn't work)
+# openai-whisper>=20231117  # Regular whisper, slower but stable
+
+# Audio processing
+pydub>=0.25.1
+numpy>=1.21.0
+
+# Optional for record/play functionality
+# pyaudio>=0.2.11  # For real-time recording/playback
+# sounddevice>=0.4.4  # Alternative audio library
+
+# For GPU support (CUDA)
+# torch>=2.0.0  # Already included with faster-whisper
+# torchaudio>=2.0.0
